@@ -1,0 +1,16 @@
+{
+  "name": "valueauth-js",
+  "version": "1.0.0",
+  "description": "ValueAuth JS (Typescript) library",
+  "main": "index.js",
+  "repository": "https://digirock.backlog.jp/git/SMS/JS-API.git",
+  "author": "Shumpei Kobayashi <skonb@me.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "jwt-simple": "^0.5.6",
+    "typed-rest-client": "^1.7.3"
+  }
+}
