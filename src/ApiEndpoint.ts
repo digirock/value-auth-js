@@ -11,7 +11,7 @@ import {
     LoginLogResult,
     StringResult,
     TwoFactorAuthSendResult
-} from "ApiResult";
+} from "@/client/ApiResult";
 
 export interface ApiEndpoint<ResultType> {
     method: string,
@@ -54,7 +54,7 @@ export const Post2FACodeEndpoint: ApiEndpoint<AuthTokenResult> = {
 export const GetContactEndpoint: ApiEndpoint<ContactListResult> = {
     method: 'get',
     path: "/twofactor/contact",
-    queryParams: ['customer_key']
+    queryParams: ['customer_key', 'send_kbn']
 }
 
 export const PostContactEndpoint: ApiEndpoint<ContactResult> = {
@@ -72,7 +72,7 @@ export const PutContactEndpoint: ApiEndpoint<ContactResult> = {
 
 export const DeleteContactEndpoint: ApiEndpoint<ContactResult> = {
     method: 'delete',
-    path: "/twofactgor/contact/{id}",
+    path: "/twofactor/contact/{id}",
     pathParams: ['id'],
     queryParams: ['customer_key']
 }

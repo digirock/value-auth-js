@@ -1,16 +1,16 @@
 import * as rm from 'typed-rest-client/RestClient'
 import {IRestResponse} from 'typed-rest-client/RestClient'
 import {IRequestOptions} from "typed-rest-client/Interfaces";
-import {ApiEndpoint} from "ApiEndpoint";
-import {ApiInput} from "ApiInput";
+import {ApiEndpoint} from "@/client/ApiEndpoint";
+import {ApiInput} from "@/client/ApiInput";
 import * as jwt from 'jwt-simple';
 
-const defaultBaseUrl = "https://api-test.homestead.test/v2/";
+const defaultBaseUrl = "https://api-test.homestead.test/";
 
 export interface ApiClientOptions {
-    authCode?: string,
     accessToken?: string,
     baseUrl?: string,
+    xdebug?: string
 }
 
 interface ApiClientInputParams {
@@ -20,25 +20,23 @@ interface ApiClientInputParams {
 }
 
 export default class ApiClient {
-    protected accessToken?: string;
+    public accessToken?: string;
     protected baseUrl?: string;
-    protected authCode?: string;
     public currentCustomerKey?: string;
+    protected xdebug?: string;
 
     public constructor(options: ApiClientOptions) {
-        this.authCode = options.authCode;
         this.baseUrl = options.baseUrl ?? defaultBaseUrl;
         this.accessToken = options.accessToken;
         this.parseAccessToken();
+        this.xdebug = options.xdebug;
     }
 
     protected parseAccessToken() {
         if (this.accessToken) {
             let decoded = jwt.decode(this.accessToken, '', true)
-            console.log(decoded);
-            const {aud, sub} = decoded;
+            const {aud} = decoded;
             this.currentCustomerKey = aud;
-            this.authCode = sub;
         }
     }
 
@@ -52,19 +50,19 @@ export default class ApiClient {
         return new rm.RestClient('value-auth-js', this.baseUrl, undefined, requestOptions)
     }
 
-    protected apiPathFor(pathPrefix: string, pathParams?: { [name: string]: any }): string {
-        let path = `${this.authCode}${pathPrefix}`;
+    protected apiPathFor(pathPrefix: string,input: { [name: string]: any },  pathParams?: string[], ): string {
+        let path = pathPrefix;
         if (pathParams) {
-            for (let key in pathParams) {
-                path = path.replace(`{${key}}`, pathParams[key])
-            }
+            pathParams.forEach(key => {
+                path = path.replace(`{${key}}`, input[key])
+            });
         }
         return path;
     }
 
     protected inputParamsFor<ResultType>(input: ApiInput, endpoint: ApiEndpoint<ResultType>): ApiClientInputParams {
         let params: ApiClientInputParams = {
-            path: this.apiPathFor(endpoint.path, endpoint.pathParams)
+            path: this.apiPathFor('/v2' + endpoint.path, input, endpoint.pathParams)
         };
         if (endpoint.queryParams) {
             let queryParams: { [name: string]: any } = {}
@@ -74,6 +72,9 @@ export default class ApiClient {
                     queryParams[key] = inputDict[key]
                 }
             })
+            if (this.xdebug) {
+                queryParams['XDEBUG_SESSION_START'] = this.xdebug;
+            }
             params.options = {
                 queryParameters: {
                     params: queryParams
@@ -107,7 +108,7 @@ export default class ApiClient {
                 promise = client.create<ResultType>(path, params, options);
                 break;
             case 'put':
-                promise = client.update<ResultType>(path, params, options);
+                promise = client.replace<ResultType>(path, params, options);
                 break;
             case 'delete':
                 promise = client.del<ResultType>(path, options);

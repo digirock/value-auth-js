@@ -1,4 +1,4 @@
-import {AccessKbn, LocationKbn, SendKbn} from "ApiInput";
+import {AccessKbn, LocationKbn, SendKbn} from "@/client/ApiInput";
 
 export interface Model {
 
