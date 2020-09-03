@@ -50,9 +50,9 @@ export default class ApiClient {
         return new rm.RestClient('value-auth-js', this.baseUrl, undefined, requestOptions)
     }
 
-    protected apiPathFor(pathPrefix: string,input: { [name: string]: any },  pathParams?: string[], ): string {
+    protected apiPathFor(pathPrefix: string, input?: { [name: string]: any }, pathParams?: string[],): string {
         let path = pathPrefix;
-        if (pathParams) {
+        if (input && pathParams) {
             pathParams.forEach(key => {
                 path = path.replace(`{${key}}`, input[key])
             });
