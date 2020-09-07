@@ -71,8 +71,8 @@ export interface PostLocationRestrictionInput extends ApiInput {
     location_kbn: LocationKbn,
     country: string,
     state: string,
-    city: string,
-    memo: string
+    city?: string,
+    memo?: string
 }
 
 export interface PutLocationRestrictionInput extends ApiInput {

@@ -7,7 +7,7 @@ import {
     CountryRestrictionResult,
     DueDateResult,
     IpAddressRestrictionListResult,
-    IpAddressRestrictionResult,
+    IpAddressRestrictionResult, LocationRestrictionListResult, LocationRestrictionResult,
     LoginLogResult,
     StringResult,
     TwoFactorAuthSendResult
@@ -77,26 +77,26 @@ export const DeleteContactEndpoint: ApiEndpoint<ContactResult> = {
     queryParams: ['customer_key']
 }
 
-export const GetLocationRestrictionEndpoint: ApiEndpoint<ContactListResult> = {
+export const GetLocationRestrictionEndpoint: ApiEndpoint<LocationRestrictionListResult> = {
     method: 'get',
     path: '/twofactor/location',
     queryParams: ['customer_key']
 }
 
-export const PostLocationRestrictionEndpoint: ApiEndpoint<ContactResult> = {
+export const PostLocationRestrictionEndpoint: ApiEndpoint<LocationRestrictionResult> = {
     method: 'post',
     path: '/twofactor/location',
     bodyParams: ['customer_key', 'location_kbn', 'country', 'state', 'city', 'memo']
 }
 
-export const PutLocationRestrictionEndpoint: ApiEndpoint<ContactResult> = {
+export const PutLocationRestrictionEndpoint: ApiEndpoint<LocationRestrictionResult> = {
     method: 'put',
     path: '/twofactor/location/{id}',
     pathParams: ['id'],
     bodyParams: ['customer_key', 'location_kbn', 'country', 'state', 'city', 'memo']
 }
 
-export const DeleteLocationRestrictionEndpoint: ApiEndpoint<ContactResult> = {
+export const DeleteLocationRestrictionEndpoint: ApiEndpoint<LocationRestrictionResult> = {
     method: 'delete',
     path: '/twofactor/location/{id}',
     pathParams: ['id']

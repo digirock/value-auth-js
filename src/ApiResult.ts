@@ -12,6 +12,11 @@ export interface Contact extends Model {
     id: number;
     address?: string;
     send_kbn?: SendKbn;
+
+}
+
+export interface LocationRestriction extends Model {
+    id: number,
     location_kbn?: LocationKbn;
     country?: string;
     state?: string;
@@ -69,6 +74,16 @@ export interface ContactResultContent {
     customer_contact: Contact;
 }
 
+export interface LocationRestrictionListResultContent {
+    customer: Customer;
+    customer_locations: Array<LocationRestriction>;
+}
+
+export interface LocationRestrictionResultContent {
+    customer: Customer;
+    customer_location: LocationRestriction;
+}
+
 export interface IpAddressRestrictionListResultContent {
     customer: Customer;
     customer_ips: Array<IpAddressRestriction>;
@@ -82,6 +97,11 @@ export interface IpAddressRestrictionResultContent {
 export interface LoginLogResultContent {
     customer: Customer;
     customer_login_log: LoginLog;
+}
+
+export interface LoginLogListResultContent {
+    customer: Customer;
+    customer_login_logs: Array<LoginLog>;
 }
 
 export interface CountryRestrictionListResultContent {
@@ -105,9 +125,12 @@ export type AuthTokenResult = ApiResult<AuthTokenResultContent>;
 export type TwoFactorAuthSendResult = ApiResult<TwoFactorAuthSendResultContent>;
 export type AccessTokenResult = ApiResult<AccessTokenResultContent>;
 export type CountryRestrictionListResult = ApiResult<CountryRestrictionListResultContent>;
-export type CountryRestrictionResult = ApiResult<CountryRestrictionListResultContent>;
+export type CountryRestrictionResult = ApiResult<CountryRestrictionResultContent>;
+export type LocationRestrictionResult = ApiResult<LocationRestrictionResultContent>;
+export type LocationRestrictionListResult = ApiResult<LocationRestrictionListResultContent>;
 export type IpAddressRestrictionResult = ApiResult<IpAddressRestrictionResultContent>;
 export type IpAddressRestrictionListResult = ApiResult<IpAddressRestrictionListResultContent>;
 export type LoginLogResult = ApiResult<LoginLogResultContent>;
+export type LoginLogListResult = ApiResult<LoginLogListResultContent>;
 export type DueDateResult = ApiResult<DueDateResultContent>;
 export type StringResult = ApiResult<string>;
