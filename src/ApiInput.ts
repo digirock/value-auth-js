@@ -119,7 +119,8 @@ export interface DeleteCountryRestrictionInput extends ApiInput {
 }
 
 export interface GetLoginLogInput extends ApiInput {
-
+    page: number,
+    limit: number
 }
 
 export interface PostLoginLogInput extends ApiInput {
