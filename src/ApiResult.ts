@@ -42,8 +42,8 @@ export interface CountryRestriction extends Model {
 }
 
 export interface CustomerSetting extends Model {
-    max_attempts: number,
-    security_level: number,
+    max_attempts?: number,
+    security_level?: number,
 }
 
 export interface DueDateResultContent {
@@ -100,6 +100,9 @@ export interface LoginLogResultContent {
 }
 
 export interface LoginLogListResultContent {
+    total: number,
+    page: number,
+    last_page: number,
     customer: Customer;
     customer_login_logs: Array<LoginLog>;
 }

@@ -7,7 +7,7 @@ import {
     CountryRestrictionResult, CustomerSettingResult,
     DueDateResult,
     IpAddressRestrictionListResult,
-    IpAddressRestrictionResult, LocationRestrictionListResult, LocationRestrictionResult,
+    IpAddressRestrictionResult, LocationRestrictionListResult, LocationRestrictionResult, LoginLogListResult,
     LoginLogResult,
     StringResult,
     TwoFactorAuthSendResult
@@ -150,6 +150,12 @@ export const DeleteCountryRestrictionEndpoint: ApiEndpoint<CountryRestrictionRes
     method: 'delete',
     path: '/twofactor/oversea/{id}',
     pathParams: ['id'],
+}
+
+export const GetLoginLogEndpoint: ApiEndpoint<LoginLogListResult> = {
+    method: 'get',
+    path: '/twofactor/loginlog',
+    queryParams: ['limit', 'page'],
 }
 
 export const PostLoginLogEndpoint: ApiEndpoint<LoginLogResult> = {

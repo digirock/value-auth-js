@@ -118,6 +118,10 @@ export interface DeleteCountryRestrictionInput extends ApiInput {
     id: number,
 }
 
+export interface GetLoginLogInput extends ApiInput {
+
+}
+
 export interface PostLoginLogInput extends ApiInput {
     ip: string,
     user_agent: string,
