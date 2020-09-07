@@ -1,7 +1,7 @@
 import {AccessKbn, LocationKbn, SendKbn} from "@/client/ApiInput";
 
 export interface Model {
-
+    id?: number
 }
 
 export interface Customer extends Model {
@@ -9,14 +9,12 @@ export interface Customer extends Model {
 }
 
 export interface Contact extends Model {
-    id: number;
     address?: string;
     send_kbn?: SendKbn;
 
 }
 
 export interface LocationRestriction extends Model {
-    id: number,
     location_kbn?: LocationKbn;
     country?: string;
     state?: string;
@@ -25,13 +23,11 @@ export interface LocationRestriction extends Model {
 }
 
 export interface IpAddressRestriction extends Model {
-    id: number;
     ip: string;
     access_kbn: AccessKbn;
 }
 
 export interface LoginLog extends Model {
-    id: number;
     ip: string;
     user_agent: string;
     address: string;
@@ -41,8 +37,7 @@ export interface LoginLog extends Model {
 }
 
 export interface CountryRestriction extends Model {
-    id: number;
-    country: string;
+    country?: string;
     access_kbn: AccessKbn;
 }
 
@@ -86,7 +81,7 @@ export interface LocationRestrictionResultContent {
 
 export interface IpAddressRestrictionListResultContent {
     customer: Customer;
-    customer_ips: Array<IpAddressRestriction>;
+    customer_ip: Array<IpAddressRestriction>;
 }
 
 export interface IpAddressRestrictionResultContent {
