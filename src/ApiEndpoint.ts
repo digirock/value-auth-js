@@ -4,7 +4,7 @@ import {
     ContactListResult,
     ContactResult,
     CountryRestrictionListResult,
-    CountryRestrictionResult,
+    CountryRestrictionResult, CustomerSettingResult,
     DueDateResult,
     IpAddressRestrictionListResult,
     IpAddressRestrictionResult, LocationRestrictionListResult, LocationRestrictionResult,
@@ -158,4 +158,14 @@ export const PostLoginLogEndpoint: ApiEndpoint<LoginLogResult> = {
     bodyParams: ['customer_key', 'ip', 'user_agent', 'is_success']
 }
 
+export const GetCustomerSettingEndpoint: ApiEndpoint<CustomerSettingResult> = {
+    method: 'get',
+    path: '/twofactor/setting',
+    queryParams: ['customer_key']
+}
 
+export const PutCustomerSettingEndpoint: ApiEndpoint<CustomerSettingResult> = {
+    method: 'put',
+    path: '/twofactor/setting',
+    bodyParams: ['customer_key', 'max_attempts', 'security_level']
+}

@@ -41,6 +41,11 @@ export interface CountryRestriction extends Model {
     access_kbn: AccessKbn;
 }
 
+export interface CustomerSetting extends Model {
+    max_attempts: number,
+    security_level: number,
+}
+
 export interface DueDateResultContent {
     due_date: string;
 }
@@ -109,6 +114,11 @@ export interface CountryRestrictionResultContent {
     customer_oversea: CountryRestriction;
 }
 
+export interface CustomerSettingResultContent {
+    customer: Customer;
+    customer_setting: CustomerSetting;
+}
+
 
 export interface ApiResult<ResultContent> {
     results: ResultContent;
@@ -127,5 +137,6 @@ export type IpAddressRestrictionResult = ApiResult<IpAddressRestrictionResultCon
 export type IpAddressRestrictionListResult = ApiResult<IpAddressRestrictionListResultContent>;
 export type LoginLogResult = ApiResult<LoginLogResultContent>;
 export type LoginLogListResult = ApiResult<LoginLogListResultContent>;
+export type CustomerSettingResult = ApiResult<CustomerSettingResultContent>;
 export type DueDateResult = ApiResult<DueDateResultContent>;
 export type StringResult = ApiResult<string>;

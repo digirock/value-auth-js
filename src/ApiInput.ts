@@ -1,5 +1,5 @@
 export interface ApiInput {
-
+    customer_key?: string,
 }
 
 export enum SendKbn {
@@ -12,7 +12,7 @@ export enum AccessKbn {
     Deny
 }
 
-export enum LocationKbn{
+export enum LocationKbn {
     Abstract = 1,
     Detailed
 }
@@ -41,33 +41,27 @@ export interface Post2FACodeInput extends ApiInput {
 }
 
 export interface GetContactInput extends ApiInput {
-    customer_key?: string,
     send_kbn?: SendKbn
 }
 
 export interface PostContactInput extends ApiInput {
-    customer_key?: string,
     address: string,
     send_kbn: SendKbn
 }
 
 export interface PutContactInput extends ApiInput {
-    customer_key?: string,
     address: string,
     send_kbn: SendKbn
 }
 
 export interface DeleteContactInput extends ApiInput {
     id: number,
-    customer_key?: string
 }
 
 export interface GetLocationRestrictionInput extends ApiInput {
-    customer_key?: string
 }
 
 export interface PostLocationRestrictionInput extends ApiInput {
-    customer_key?: string,
     location_kbn: LocationKbn,
     country: string,
     state: string,
@@ -89,11 +83,9 @@ export interface DeleteLocationRestrictionInput extends ApiInput {
 }
 
 export interface GetIpAddressRestrictionInput extends ApiInput {
-    customer_key?: string
 }
 
 export interface PostIpAddressRestrictionInput extends ApiInput {
-    customer_key?: string,
     ip: string,
     access_kbn: AccessKbn
 }
@@ -109,11 +101,9 @@ export interface DeleteIpAddressRestrictionInput extends ApiInput {
 }
 
 export interface GetCountryRestrictionInput extends ApiInput {
-    customer_key?: string
 }
 
 export interface PostCountryRestrictionInput extends ApiInput {
-    customer_key?: string,
     country: string,
     access_kbn: AccessKbn
 }
@@ -129,8 +119,16 @@ export interface DeleteCountryRestrictionInput extends ApiInput {
 }
 
 export interface PostLoginLogInput extends ApiInput {
-    customer_key?: string,
     ip: string,
     user_agent: string,
     is_success: boolean
+}
+
+export interface GetCustomerSettingInput extends ApiInput {
+
+}
+
+export interface PutCustomerSettingInput extends ApiInput {
+    max_attempts?: number,
+    security_level?: number,
 }
