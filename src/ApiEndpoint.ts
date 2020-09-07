@@ -136,14 +136,14 @@ export const GetCountryRestrictionEndpoint: ApiEndpoint<CountryRestrictionListRe
 export const PostCountryRestrictionEndpoint: ApiEndpoint<CountryRestrictionResult> = {
     method: 'post',
     path: '/twofactor/oversea',
-    queryParams: ['customer_key', 'country', 'access_kbn']
+    bodyParams: ['customer_key', 'country', 'access_kbn']
 }
 
 export const PutCountryRestrictionEndpoint: ApiEndpoint<CountryRestrictionResult> = {
     method: 'put',
     path: '/twofactor/oversea/{id}',
     pathParams: ['id'],
-    queryParams: ['customer_key', 'country', 'access_kbn']
+    bodyParams: ['customer_key', 'country', 'access_kbn']
 }
 
 export const DeleteCountryRestrictionEndpoint: ApiEndpoint<CountryRestrictionResult> = {
