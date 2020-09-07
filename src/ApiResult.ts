@@ -106,7 +106,7 @@ export interface LoginLogListResultContent {
 
 export interface CountryRestrictionListResultContent {
     customer: Customer;
-    customer_overseas: Array<CountryRestriction>;
+    customer_oversea: Array<CountryRestriction>;
 }
 
 export interface CountryRestrictionResultContent {
