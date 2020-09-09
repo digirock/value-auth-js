@@ -10,7 +10,8 @@ const defaultBaseUrl = "https://api-test.homestead.test/";
 export interface ApiClientOptions {
     accessToken?: string,
     baseUrl?: string,
-    xdebug?: string
+    xdebug?: string,
+    initializationCallback?: (value: ApiClient) => void
 }
 
 interface ApiClientInputParams {
