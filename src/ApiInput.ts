@@ -29,7 +29,7 @@ export interface GetKycCodeInput extends ApiInput {
 
 export interface PostKycCodeInput extends ApiInput {
     address: string,
-    number: number
+    number: string
 }
 
 export interface Get2FACodeInput extends ApiInput {
@@ -37,7 +37,7 @@ export interface Get2FACodeInput extends ApiInput {
 }
 
 export interface Post2FACodeInput extends ApiInput {
-    number: number
+    number: string
 }
 
 export interface GetContactInput extends ApiInput {
