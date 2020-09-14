@@ -18,7 +18,8 @@ export enum LocationKbn {
 }
 
 export interface GetAccessTokenInput extends ApiInput {
-    customer_key: string
+    customer_key: string,
+    auth_code: string
 }
 
 export interface GetKycCodeInput extends ApiInput {

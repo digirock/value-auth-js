@@ -41,10 +41,14 @@ export default class ApiClient {
         }
     }
 
-    protected defaultRestClient(token: string): rm.RestClient {
+    protected get bearerToken(): string {
+        return this.accessToken!;
+    }
+
+    protected defaultRestClient(): rm.RestClient {
         let requestOptions: IRequestOptions = {
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${this.bearerToken}`
             },
             ignoreSslError: true,
         };
@@ -98,7 +102,7 @@ export default class ApiClient {
 
     public async process<ResultType>(input: ApiInput, endpoint: ApiEndpoint<ResultType>):
         Promise<ResultType> {
-        let client = this.defaultRestClient(this.accessToken!);
+        let client = this.defaultRestClient();
         let promise: Promise<IRestResponse<ResultType>>;
         let {path, params, options} = this.inputParamsFor(input, endpoint);
         switch (endpoint.method) {
