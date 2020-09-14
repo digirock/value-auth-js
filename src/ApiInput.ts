@@ -18,7 +18,6 @@ export enum LocationKbn {
 }
 
 export interface GetAccessTokenInput extends ApiInput {
-    customer_key: string,
     auth_code: string,
     role: string
 }
@@ -51,9 +50,8 @@ export interface PostContactInput extends ApiInput {
     send_kbn: SendKbn
 }
 
-export interface PutContactInput extends ApiInput {
-    address: string,
-    send_kbn: SendKbn
+export interface PutContactInput extends PostContactInput {
+    id: number
 }
 
 export interface DeleteContactInput extends ApiInput {
@@ -71,13 +69,8 @@ export interface PostLocationRestrictionInput extends ApiInput {
     memo?: string
 }
 
-export interface PutLocationRestrictionInput extends ApiInput {
+export interface PutLocationRestrictionInput extends PostLocationRestrictionInput {
     id: number,
-    location_kbn: LocationKbn,
-    country: string,
-    state: string,
-    city: string,
-    memo: string
 }
 
 export interface DeleteLocationRestrictionInput extends ApiInput {
@@ -92,10 +85,8 @@ export interface PostIpAddressRestrictionInput extends ApiInput {
     access_kbn: AccessKbn
 }
 
-export interface PutIpAddressRestrictionInput extends ApiInput {
+export interface PutIpAddressRestrictionInput extends PostIpAddressRestrictionInput{
     id: number,
-    ip: string,
-    access_kbn: AccessKbn
 }
 
 export interface DeleteIpAddressRestrictionInput extends ApiInput {
@@ -110,10 +101,8 @@ export interface PostCountryRestrictionInput extends ApiInput {
     access_kbn: AccessKbn
 }
 
-export interface PutCountryRestrictionInput extends ApiInput {
+export interface PutCountryRestrictionInput extends PostCountryRestrictionInput{
     id: number
-    country: string,
-    access_kbn: AccessKbn
 }
 
 export interface DeleteCountryRestrictionInput extends ApiInput {
