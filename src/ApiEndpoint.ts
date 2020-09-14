@@ -25,7 +25,7 @@ export const GetAccessTokenEndpoint: ApiEndpoint<AccessTokenResult> = {
     method: 'get',
     path: '/{auth_code}/auth/accesstoken',
     pathParams: ['auth_code'],
-    queryParams: ['customer_key']
+    queryParams: ['customer_key', 'role']
 }
 
 export const GetKycEndpoint: ApiEndpoint<DueDateResult> = {

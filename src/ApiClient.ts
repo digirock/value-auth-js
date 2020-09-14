@@ -11,7 +11,8 @@ export interface ApiClientOptions {
     accessToken?: string,
     baseUrl?: string,
     xdebug?: string,
-    initializationCallback?: (value: ApiClient) => void
+    initializationCallback?: (value: ApiClient) => ApiClient;
+    role: string,
 }
 
 interface ApiClientInputParams {
@@ -25,12 +26,14 @@ export default class ApiClient {
     protected baseUrl?: string;
     public currentCustomerKey?: string;
     protected xdebug?: string;
+    protected initializationCallback?: (value: ApiClient) => ApiClient;
 
     public constructor(options: ApiClientOptions) {
         this.baseUrl = options.baseUrl ?? defaultBaseUrl;
         this.accessToken = options.accessToken;
         this.parseAccessToken();
         this.xdebug = options.xdebug;
+        this.initializationCallback = options.initializationCallback;
     }
 
     protected parseAccessToken() {
