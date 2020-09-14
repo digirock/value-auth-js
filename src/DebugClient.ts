@@ -33,7 +33,11 @@ export default class DebugClient extends ApiClient {
     }
 
     protected get bearerToken(): string {
-        return this.apiKey;
+        if (this.accessToken){
+            return this.accessToken;
+        }else {
+            return this.apiKey;
+        }
     }
 
     async getAccessToken(apiKey: string, customerKey: string, role: string): Promise<ApiClient> {
