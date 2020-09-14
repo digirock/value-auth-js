@@ -27,6 +27,7 @@ export default class ApiClient {
     public currentCustomerKey?: string;
     protected xdebug?: string;
     protected initializationCallback?: (value: ApiClient) => ApiClient;
+    protected currentRole?: string;
 
     public constructor(options: ApiClientOptions) {
         this.baseUrl = options.baseUrl ?? defaultBaseUrl;
@@ -39,8 +40,9 @@ export default class ApiClient {
     protected parseAccessToken() {
         if (this.accessToken) {
             let decoded = jwt.decode(this.accessToken, '', true)
-            const {aud} = decoded;
+            const {aud, role} = decoded;
             this.currentCustomerKey = aud;
+            this.currentRole = role;
         }
     }
 
