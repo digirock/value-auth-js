@@ -24,7 +24,16 @@ export default class DebugClient extends ApiClient {
     }
 
     async fetchAccessToken(customerKey: string, role: string) {
-        let promise = this.getAccessToken(this.apiKey, customerKey, role);
+        let input = <GetAccessTokenInput>{
+            auth_code: this.authCode,
+            customer_key: customerKey,
+            role: role
+        }
+        let promise = this.process(input, GetAccessTokenEndpoint).then(result => {
+            this.accessToken = result.results.access_token;
+            this.parseAccessToken();
+            return this;
+        })
         if (this.initializationCallback) {
             return promise.then(this.initializationCallback);
         } else {
@@ -33,23 +42,11 @@ export default class DebugClient extends ApiClient {
     }
 
     protected get bearerToken(): string {
-        if (this.accessToken){
+        if (this.accessToken) {
             return this.accessToken;
-        }else {
+        } else {
             return this.apiKey;
         }
     }
 
-    async getAccessToken(apiKey: string, customerKey: string, role: string): Promise<ApiClient> {
-        let input = <GetAccessTokenInput>{
-            auth_code: this.authCode,
-            customer_key: customerKey,
-            role: role
-        }
-        return this.process(input, GetAccessTokenEndpoint).then(result => {
-            this.accessToken = result.results.access_token;
-            this.parseAccessToken();
-            return this;
-        })
-    }
 }
