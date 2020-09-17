@@ -129,7 +129,7 @@ export interface PutCustomerSettingInput extends ApiInput {
     security_level?: number,
 }
 
-export interface PostCheckLoginInput extends ApiInput{
+export interface PostLoginCheckInput extends ApiInput{
     ip: string,
     user_agent: string,
 }
