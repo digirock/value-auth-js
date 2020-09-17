@@ -1,7 +1,7 @@
 import * as rm from 'typed-rest-client/RestClient'
 import {IRestResponse} from 'typed-rest-client/RestClient'
 import {IRequestOptions} from "typed-rest-client/Interfaces";
-import {ApiEndpoint} from "@/client/ApiEndpoint";
+import {ApiAuthentication, ApiEndpoint} from "@/client/ApiEndpoint";
 import {ApiInput} from "@/client/ApiInput";
 import * as jwt from 'jwt-simple';
 
@@ -46,14 +46,36 @@ export default class ApiClient {
         }
     }
 
-    protected get bearerToken(): string {
-        return this.accessToken!;
+    protected get apiKey(): string | undefined {
+        return undefined;
     }
 
-    protected defaultRestClient(): rm.RestClient {
+    protected bearerToken<T>(endpoint: ApiEndpoint<T>): string {
+        if (endpoint.authentication) {
+            switch (endpoint.authentication) {
+                case ApiAuthentication.ApiKey:
+                    if (!this.apiKey) {
+                        throw new Error("API key is not set");
+                    }
+                    return this.apiKey;
+                case ApiAuthentication.AccessToken:
+                    if (!this.accessToken) {
+                        throw new Error("Access token is not set.");
+                    }
+                    return this.accessToken;
+            }
+        } else {
+            if (!this.accessToken) {
+                throw new Error("Access token is not set.");
+            }
+            return this.accessToken;
+        }
+    }
+
+    protected defaultRestClient<T>(endpoint: ApiEndpoint<T>): rm.RestClient {
         let requestOptions: IRequestOptions = {
             headers: {
-                "Authorization": `Bearer ${this.bearerToken}`
+                "Authorization": `Bearer ${this.bearerToken(endpoint)}`
             },
             ignoreSslError: true,
         };
@@ -105,9 +127,16 @@ export default class ApiClient {
         return params;
     }
 
+    protected authenticationGuard<T>(endpoint: ApiEndpoint<T>) {
+        if (endpoint.authentication == ApiAuthentication.ApiKey) {
+            throw new Error("Cannot call API that requires API Key");
+        }
+    }
+
     public async process<ResultType>(input: ApiInput, endpoint: ApiEndpoint<ResultType>):
         Promise<ResultType> {
-        let client = this.defaultRestClient();
+        this.authenticationGuard(endpoint);
+        let client = this.defaultRestClient(endpoint);
         let promise: Promise<IRestResponse<ResultType>>;
         let {path, params, options} = this.inputParamsFor(input, endpoint);
         switch (endpoint.method) {

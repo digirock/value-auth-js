@@ -4,6 +4,19 @@ export interface Model {
     id?: number
 }
 
+export enum LoginStatus {
+    LoggedIn = "logged_in",
+    Failed = "failed"
+}
+
+export enum AuthStatus {
+    Completed = "Completed",
+    Send = "Send",
+    Failed = "Failed",
+    Limit = "Limit",
+    Due = "Due"
+}
+
 export interface Customer extends Model {
     customer_key: string;
 }
@@ -31,9 +44,11 @@ export interface LoginLog extends Model {
     ip: string;
     user_agent: string;
     address: string;
-    is_success: boolean;
-    fraud_point: string;
-    date?: string;
+    is_checked: boolean,
+    login_status: LoginStatus;
+    logged_in_at: string;
+    auth_status: AuthStatus;
+    authenticated_at: string
 }
 
 export interface CountryRestriction extends Model {
@@ -86,7 +101,7 @@ export interface LocationRestrictionResultContent {
 
 export interface IpAddressRestrictionListResultContent {
     customer: Customer;
-    customer_ip: Array<IpAddressRestriction>;
+    customer_ips: Array<IpAddressRestriction>;
 }
 
 export interface IpAddressRestrictionResultContent {
@@ -109,7 +124,7 @@ export interface LoginLogListResultContent {
 
 export interface CountryRestrictionListResultContent {
     customer: Customer;
-    customer_oversea: Array<CountryRestriction>;
+    customer_overseas: Array<CountryRestriction>;
 }
 
 export interface CountryRestrictionResultContent {
@@ -120,6 +135,11 @@ export interface CountryRestrictionResultContent {
 export interface CustomerSettingResultContent {
     customer: Customer;
     customer_setting: CustomerSetting;
+}
+
+export interface LoginCheckResultContent {
+    login_key: string;
+    point: number;
 }
 
 
@@ -143,3 +163,4 @@ export type LoginLogListResult = ApiResult<LoginLogListResultContent>;
 export type CustomerSettingResult = ApiResult<CustomerSettingResultContent>;
 export type DueDateResult = ApiResult<DueDateResultContent>;
 export type StringResult = ApiResult<string>;
+export type LoginCheckResult = ApiResult<LoginCheckResultContent>;

@@ -4,14 +4,24 @@ import {
     ContactListResult,
     ContactResult,
     CountryRestrictionListResult,
-    CountryRestrictionResult, CustomerSettingResult,
+    CountryRestrictionResult,
+    CustomerSettingResult,
     DueDateResult,
     IpAddressRestrictionListResult,
-    IpAddressRestrictionResult, LocationRestrictionListResult, LocationRestrictionResult, LoginLogListResult,
+    IpAddressRestrictionResult,
+    LocationRestrictionListResult,
+    LocationRestrictionResult,
+    LoginCheckResult,
+    LoginLogListResult,
     LoginLogResult,
     StringResult,
     TwoFactorAuthSendResult
 } from "@/client/ApiResult";
+
+export enum ApiAuthentication {
+    ApiKey = 'api_key',
+    AccessToken = 'access_token'
+}
 
 export interface ApiEndpoint<ResultType> {
     method: string,
@@ -19,13 +29,15 @@ export interface ApiEndpoint<ResultType> {
     pathParams?: string[],
     queryParams?: string[],
     bodyParams?: string[],
+    authentication?: ApiAuthentication
 }
 
 export const GetAccessTokenEndpoint: ApiEndpoint<AccessTokenResult> = {
     method: 'get',
     path: '/{auth_code}/auth/accesstoken',
     pathParams: ['auth_code'],
-    queryParams: ['customer_key', 'role']
+    queryParams: ['customer_key', 'role'],
+    authentication: ApiAuthentication.ApiKey
 }
 
 export const GetKycEndpoint: ApiEndpoint<DueDateResult> = {
@@ -162,7 +174,8 @@ export const GetLoginLogEndpoint: ApiEndpoint<LoginLogListResult> = {
 export const PostLoginLogEndpoint: ApiEndpoint<LoginLogResult> = {
     method: 'post',
     path: '/twofactor/loginlog',
-    bodyParams: ['customer_key', 'ip', 'user_agent', 'is_success']
+    bodyParams: ['customer_key', 'login_key', 'is_logged_in'],
+    authentication: ApiAuthentication.ApiKey
 }
 
 export const GetCustomerSettingEndpoint: ApiEndpoint<CustomerSettingResult> = {
@@ -175,4 +188,12 @@ export const PutCustomerSettingEndpoint: ApiEndpoint<CustomerSettingResult> = {
     method: 'put',
     path: '/twofactor/setting',
     bodyParams: ['customer_key', 'max_attempts', 'security_level']
+}
+
+export const PostLoginCheckEndpoint: ApiEndpoint<LoginCheckResult> = {
+    method: 'post',
+    path: '/{auth_code}/twofactor/checklogin',
+    pathParams: ['auth_code'],
+    bodyParams: ['customer_key', 'ip', 'user_agent'],
+    authentication: ApiAuthentication.ApiKey
 }

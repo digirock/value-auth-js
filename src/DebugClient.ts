@@ -1,6 +1,6 @@
 import ApiClient, {ApiClientOptions} from "@/client/ApiClient";
 import {GetAccessTokenInput} from "@/client/ApiInput";
-import {GetAccessTokenEndpoint} from "@/client/ApiEndpoint";
+import {ApiEndpoint, GetAccessTokenEndpoint} from "@/client/ApiEndpoint";
 
 export interface DebugClientOptions extends ApiClientOptions {
     authCode: string,
@@ -10,7 +10,7 @@ export interface DebugClientOptions extends ApiClientOptions {
 
 export default class DebugClient extends ApiClient {
     protected authCode: string;
-    protected apiKey: string;
+    protected _apiKey: string | undefined;
 
 
     constructor(options: DebugClientOptions) {
@@ -21,6 +21,14 @@ export default class DebugClient extends ApiClient {
         if (!this.accessToken) {
             let _ = this.fetchAccessToken(options.customerKey, options.role);
         }
+    }
+
+    set apiKey(newValue: string | undefined) {
+        this._apiKey = newValue;
+    }
+
+    get apiKey(): string | undefined {
+        return this._apiKey;
     }
 
     async fetchAccessToken(customerKey: string, role: string) {
@@ -41,12 +49,7 @@ export default class DebugClient extends ApiClient {
         }
     }
 
-    protected get bearerToken(): string {
-        if (this.accessToken) {
-            return this.accessToken;
-        } else {
-            return this.apiKey;
-        }
+    protected authenticationGuard<T>(endpoint: ApiEndpoint<T>) {
     }
 
 }

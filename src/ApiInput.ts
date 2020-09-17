@@ -128,3 +128,8 @@ export interface PutCustomerSettingInput extends ApiInput {
     max_attempts?: number,
     security_level?: number,
 }
+
+export interface PostCheckLoginInput extends ApiInput{
+    ip: string,
+    user_agent: string,
+}
