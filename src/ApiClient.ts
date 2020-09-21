@@ -4,6 +4,7 @@ import {IRequestOptions} from "typed-rest-client/Interfaces";
 import {ApiAuthentication, ApiEndpoint} from "@/client/ApiEndpoint";
 import {ApiInput} from "@/client/ApiInput";
 import * as jwt from 'jwt-simple';
+import {AccessTokenRole} from "@/client/AccessTokenRole";
 
 const defaultBaseUrl = "https://api-test.homestead.test/";
 
@@ -12,7 +13,8 @@ export interface ApiClientOptions {
     baseUrl?: string,
     xdebug?: string,
     initializationCallback?: (value: ApiClient) => ApiClient;
-    role: string,
+    role: AccessTokenRole,
+    debug?: boolean
 }
 
 interface ApiClientInputParams {
@@ -27,7 +29,8 @@ export default class ApiClient {
     public currentCustomerKey?: string;
     protected xdebug?: string;
     protected initializationCallback?: (value: ApiClient) => ApiClient;
-    protected currentRole?: string;
+    protected currentRole?: AccessTokenRole;
+    protected debug: boolean = false;
 
     public constructor(options: ApiClientOptions) {
         this.baseUrl = options.baseUrl ?? defaultBaseUrl;
@@ -35,6 +38,7 @@ export default class ApiClient {
         this.parseAccessToken();
         this.xdebug = options.xdebug;
         this.initializationCallback = options.initializationCallback;
+        this.debug = options.debug ?? false;
     }
 
     protected parseAccessToken() {
@@ -72,12 +76,13 @@ export default class ApiClient {
         }
     }
 
+
     protected defaultRestClient<T>(endpoint: ApiEndpoint<T>): rm.RestClient {
         let requestOptions: IRequestOptions = {
             headers: {
                 "Authorization": `Bearer ${this.bearerToken(endpoint)}`
             },
-            ignoreSslError: true,
+            ignoreSslError: this.debug,
         };
         return new rm.RestClient('value-auth-js', this.baseUrl, undefined, requestOptions)
     }

@@ -115,6 +115,7 @@ export interface GetLoginLogInput extends ApiInput {
 }
 
 export interface PostLoginLogInput extends ApiInput {
+    auth_code: string,
     ip: string,
     user_agent: string,
     is_success: boolean
@@ -130,6 +131,7 @@ export interface PutCustomerSettingInput extends ApiInput {
 }
 
 export interface PostLoginCheckInput extends ApiInput{
+    auth_code: string,
     ip: string,
     user_agent: string,
 }
