@@ -1,12 +1,10 @@
 import * as rm from 'typed-rest-client/RestClient'
 import {IRestResponse} from 'typed-rest-client/RestClient'
 import {IRequestOptions} from "typed-rest-client/Interfaces";
-import {ApiAuthentication, ApiEndpoint} from "@/client/ApiEndpoint";
-import {ApiInput} from "@/client/ApiInput";
+import {ApiAuthentication, ApiEndpoint} from './ApiEndpoint';
+import {ApiInput} from './ApiInput';
 import * as jwt from 'jwt-simple';
-import {AccessTokenRole} from "@/client/AccessTokenRole";
-
-const defaultBaseUrl = "https://api-test.homestead.test/";
+import {AccessTokenRole} from "./AccessTokenRole";
 
 export interface ApiClientOptions {
     accessToken?: string,
@@ -23,7 +21,7 @@ interface ApiClientInputParams {
     options?: rm.IRequestOptions
 }
 
-export default class ApiClient {
+export class ApiClient {
     public accessToken?: string;
     protected baseUrl?: string;
     public currentCustomerKey?: string;
@@ -33,7 +31,7 @@ export default class ApiClient {
     protected debug: boolean = false;
 
     public constructor(options: ApiClientOptions) {
-        this.baseUrl = options.baseUrl ?? defaultBaseUrl;
+        this.baseUrl = options.baseUrl;
         this.accessToken = options.accessToken;
         this.parseAccessToken();
         this.xdebug = options.xdebug;
@@ -162,7 +160,5 @@ export default class ApiClient {
             return response.result!;
         });
     }
-
-
 }
 

@@ -1,6 +1,6 @@
-import ApiClient, {ApiClientOptions} from "@/client/ApiClient";
-import {GetAccessTokenInput} from "@/client/ApiInput";
-import {ApiEndpoint, GetAccessTokenEndpoint} from "@/client/ApiEndpoint";
+import {ApiClient, ApiClientOptions} from "./ApiClient";
+import {GetAccessTokenInput} from "./ApiInput";
+import {ApiEndpoint, GetAccessTokenEndpoint} from "./ApiEndpoint";
 
 export interface DebugClientOptions extends ApiClientOptions {
     authCode: string,
@@ -8,7 +8,7 @@ export interface DebugClientOptions extends ApiClientOptions {
     customerKey: string,
 }
 
-export default class DebugClient extends ApiClient {
+export class DebugClient extends ApiClient {
     protected authCode: string;
     protected _apiKey: string | undefined;
 

@@ -72,3 +72,9 @@ typings/
 
 # IntelliJ
 .idea
+
+# Webpack
+dist
+
+# TSC
+tsOutputs

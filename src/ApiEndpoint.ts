@@ -16,7 +16,7 @@ import {
     LoginLogResult,
     StringResult,
     TwoFactorAuthSendResult
-} from "@/client/ApiResult";
+} from "./ApiResult";
 
 export enum ApiAuthentication {
     ApiKey = 'api_key',
