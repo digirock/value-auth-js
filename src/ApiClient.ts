@@ -2,9 +2,8 @@ import * as rm from 'typed-rest-client/RestClient'
 import {IRestResponse} from 'typed-rest-client/RestClient'
 import {IRequestOptions} from "typed-rest-client/Interfaces";
 import {ApiAuthentication, ApiEndpoint} from './ApiEndpoint';
-import {ApiInput} from './ApiInput';
+import {AccessTokenRole, ApiInput} from './ApiInput';
 import * as jwt from 'jwt-simple';
-import {AccessTokenRole} from "./AccessTokenRole";
 
 export interface ApiClientOptions {
     accessToken?: string,

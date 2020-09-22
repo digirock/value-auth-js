@@ -17,6 +17,12 @@ export enum LocationKbn {
     Detailed
 }
 
+export enum AccessTokenRole {
+    Auth = "auth",
+    Api = "api"
+}
+
+
 export interface GetAccessTokenInput extends ApiInput {
     auth_code: string,
     role: string

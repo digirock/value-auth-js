@@ -1,5 +1,4 @@
 
-export * from './AccessTokenRole';
 export * from './ApiClient';
 export * from './ApiEndpoint';
 export * from './ApiError';
