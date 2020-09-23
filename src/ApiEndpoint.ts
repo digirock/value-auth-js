@@ -34,7 +34,7 @@ export interface ApiEndpoint<ResultType> {
 
 export const GetAccessTokenEndpoint: ApiEndpoint<AccessTokenResult> = {
     method: 'get',
-    path: '/{auth_code}/auth/accesstoken',
+    path: '/{auth_code}/twofactor/accesstoken',
     pathParams: ['auth_code'],
     queryParams: ['customer_key', 'role'],
     authentication: ApiAuthentication.ApiKey
