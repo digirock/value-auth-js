@@ -22,12 +22,12 @@ interface ApiClientInputParams {
 
 export class ApiClient {
     public accessToken?: string;
-    protected baseUrl?: string;
+    public baseUrl?: string;
     public currentCustomerKey?: string;
-    protected xdebug?: string;
-    protected initializationCallback?: (value: ApiClient) => ApiClient;
-    protected currentRole?: AccessTokenRole;
-    protected debug: boolean = false;
+    public xdebug?: string;
+    public initializationCallback?: (value: ApiClient) => ApiClient;
+    public currentRole?: AccessTokenRole;
+    public debug: boolean = false;
 
     public constructor(options: ApiClientOptions) {
         this.baseUrl = options.baseUrl;
