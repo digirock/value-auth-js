@@ -51,6 +51,10 @@ export class ApiClient {
         return undefined;
     }
 
+    protected get authCode(): string | undefined {
+        return undefined;
+    }
+
     protected bearerToken<T>(endpoint: ApiEndpoint<T>): string {
         if (endpoint.authentication) {
             switch (endpoint.authentication) {
@@ -86,6 +90,10 @@ export class ApiClient {
 
     protected apiPathFor(pathPrefix: string, input?: { [name: string]: any }, pathParams?: string[],): string {
         let path = pathPrefix;
+        let inputDict: {[name: string]: any}|undefined = input;
+        if (this.authCode && inputDict) {
+            inputDict['auth_code'] = this.authCode;
+        }
         if (input && pathParams) {
             pathParams.forEach(key => {
                 path = path.replace(`{${key}}`, input[key])
@@ -98,9 +106,12 @@ export class ApiClient {
         let params: ApiClientInputParams = {
             path: this.apiPathFor('/v2' + endpoint.path, input, endpoint.pathParams)
         };
+        let inputDict: {[name: string]: any} = input;
+        if (this.authCode) {
+            inputDict['auth_code'] = this.authCode;
+        }
         if (endpoint.queryParams) {
             let queryParams: { [name: string]: any } = {}
-            let inputDict = input as { [name: string]: any };
             endpoint.queryParams.forEach(key => {
                 if (inputDict[key]) {
                     queryParams[key] = inputDict[key]
@@ -118,7 +129,6 @@ export class ApiClient {
         }
         if (endpoint.bodyParams) {
             let bodyParams: { [name: string]: any } = {}
-            let inputDict = input as { [name: string]: any };
             endpoint.bodyParams.forEach(key => {
                 if (inputDict[key]) {
                     bodyParams[key] = inputDict[key]

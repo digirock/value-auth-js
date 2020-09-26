@@ -9,7 +9,7 @@ export interface DebugClientOptions extends ApiClientOptions {
 }
 
 export class DebugClient extends ApiClient {
-    protected authCode: string;
+    protected _authCode: string | undefined;
     protected _apiKey: string | undefined;
 
 
@@ -29,6 +29,14 @@ export class DebugClient extends ApiClient {
 
     get apiKey(): string | undefined {
         return this._apiKey;
+    }
+
+    set authCode(newValue: string | undefined) {
+        this._authCode = newValue;
+    }
+
+    get authCode(): string | undefined {
+        return this._authCode;
     }
 
     async fetchAccessToken(customerKey: string, role: string) {
