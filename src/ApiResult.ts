@@ -119,7 +119,7 @@ export interface LoginLogListResultContent {
     page: number,
     last_page: number,
     customer: Customer;
-    customer_login_logs: Array<LoginLog>;
+    customer_login_log: Array<LoginLog>;
 }
 
 export interface CountryRestrictionListResultContent {

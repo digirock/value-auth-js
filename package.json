@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "jwt-simple": "^0.5.6",
-    "typed-rest-client": "^1.7.3"
+    "typed-rest-client": "^1.7.3",
+    "ipify2": "^1.0.7"
   },
   "files": [
     "tsOutputs/**/*.js",

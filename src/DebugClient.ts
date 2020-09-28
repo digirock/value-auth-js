@@ -1,6 +1,8 @@
 import {ApiClient, ApiClientOptions} from "./ApiClient";
-import {GetAccessTokenInput} from "./ApiInput";
-import {ApiEndpoint, GetAccessTokenEndpoint} from "./ApiEndpoint";
+import {AccessTokenRole, GetAccessTokenInput, PostLoginCheckInput} from "./ApiInput";
+import {ApiEndpoint, GetAccessTokenEndpoint, PostLoginCheckEndpoint} from "./ApiEndpoint";
+import * as ipify from "ipify2";
+import {LoginCheckResult} from "@/ApiResult";
 
 export interface DebugClientOptions extends ApiClientOptions {
     authCode: string,
@@ -39,11 +41,10 @@ export class DebugClient extends ApiClient {
         return this._authCode;
     }
 
-    async fetchAccessToken(customerKey: string, role: string) {
+    async fetchApiAccessToken(customerKey: string) {
         let input = <GetAccessTokenInput>{
-            auth_code: this.authCode,
             customer_key: customerKey,
-            role: role
+            role: AccessTokenRole.Api
         }
         let promise = this.process(input, GetAccessTokenEndpoint).then(result => {
             this.accessToken = result.results.access_token;
@@ -54,6 +55,42 @@ export class DebugClient extends ApiClient {
             return promise.then(this.initializationCallback);
         } else {
             return promise;
+        }
+    }
+
+    async fetchAuthAccessToken(customerKey: string) {
+        let ipv4 = await ipify.ipv4();
+        let input1 = <PostLoginCheckInput>{
+            ip: ipv4,
+            user_agent: navigator.userAgent,
+            customer_key: customerKey
+        };
+        let result1: LoginCheckResult = await this.process(input1, PostLoginCheckEndpoint);
+        let input2 = <GetAccessTokenInput>{
+            customer_key: customerKey,
+            login_key: result1.results.login_key,
+            role: AccessTokenRole.Auth
+        }
+        let promise = this.process(input2, GetAccessTokenEndpoint).then(result => {
+            this.accessToken = result.results.access_token;
+            this.parseAccessToken();
+
+            return this;
+
+        })
+        if (this.initializationCallback) {
+            return promise.then(this.initializationCallback);
+        } else {
+            return promise;
+        }
+
+    }
+
+    async fetchAccessToken(customerKey: string, role: string) {
+        if (role == AccessTokenRole.Api) {
+            await this.fetchApiAccessToken(customerKey);
+        } else if (role == AccessTokenRole.Auth) {
+            await this.fetchAuthAccessToken(customerKey);
         }
     }
 
