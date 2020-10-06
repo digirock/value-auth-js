@@ -1,6 +1,6 @@
 {
   "name": "value-auth-js",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "ValueAuth JS (Typescript) library",
   "repository": "https://digirock.backlog.jp/git/SMS/JS-API.git",
   "author": "Shumpei Kobayashi <skonb@me.com>",
@@ -18,9 +18,9 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "ipify2": "^1.0.7",
     "jwt-simple": "^0.5.6",
-    "typed-rest-client": "^1.7.3",
-    "ipify2": "^1.0.7"
+    "typed-rest-client": "^1.7.3"
   },
   "files": [
     "tsOutputs/**/*.js",
