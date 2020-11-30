@@ -5,8 +5,8 @@ export interface Model {
 }
 
 export enum LoginStatus {
-    LoggedIn = "logged_in",
-    Failed = "failed"
+    LoggedIn = "LoggedIn",
+    Failed = "Failed"
 }
 
 export enum AuthStatus {
