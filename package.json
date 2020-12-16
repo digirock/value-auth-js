@@ -1,6 +1,6 @@
 {
   "name": "value-auth-js",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "ValueAuth JS (Typescript) library",
   "repository": "https://github.com/digirock/value-auth-js.git",
   "author": "Shumpei Kobayashi <skonb@me.com>",
